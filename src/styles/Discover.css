@@ -1,3 +1,16 @@
 .discover {
   
 }
+
+.discover-sliders {
+  text-align: center;
+  padding-left: 75px;
+}
+
+.search-button {
+  margin-top: 20px !important;
+}
+
+.right-param-text {
+  padding-left: 20px;
+}

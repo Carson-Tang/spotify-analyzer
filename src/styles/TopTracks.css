@@ -1,3 +1,27 @@
 .top-tracks {
-  padding-left: 20px;
+  padding-left: 30px;
+}
+
+.bar-slider {
+  padding-top: 40px;
+}
+
+.current-track-info {
+  padding-top: 40px;
+  margin-left: -40px;
+}
+
+.bars-label {
+  background-color: #0059b3 !important;
+  color: white !important;
+}
+
+.beats-label {
+  background-color: #0481ff !important;
+  color: white !important;
+}
+
+.tatums-label {
+  background-color: #3f9fff !important;
+  color: white !important;
 }

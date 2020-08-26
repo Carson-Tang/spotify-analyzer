@@ -74,7 +74,7 @@ const Player = () => {
                         {track.name} by {track.artists.map(artist => artist.name).join(', ')}
                       </List.Item>
                     ))}
-                  </List> : <div>{`Oops, there doesn\'t appear to be any track called "${searchTrack}".`}</div>
+                  </List> : <div>{`Oops, there doesn't appear to be any track called "${searchTrack}".`}</div>
                 }
               </SpotifySearch>
             </SpotifyApiContext.Provider>

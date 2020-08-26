@@ -4,7 +4,7 @@ import { UserTop, TrackAnalysis } from 'react-spotify-api'
 import ReactCardCarousel from 'react-card-carousel'
 import { Sunburst } from 'react-vis'
 import { Slider } from 'react-semantic-ui-range'
-//import '../../styles/TopTracks.css'
+import '../../styles/TopTracks.css'
 import '../../../node_modules/react-vis/dist/style.css'
 
 const pitchClass = {
@@ -54,7 +54,8 @@ const TopTracks = () => {
 
   function toMMSS(seconds) {
     const mm = Math.floor(seconds / 60)
-    const ss = Math.floor(seconds % 60)
+    const s = Math.floor(seconds % 60)
+    const ss = s < 10 ? '0' + s : s
     return mm + ':' + ss
   }
 
@@ -147,77 +148,88 @@ const TopTracks = () => {
         x = 0
       }
     })
-    console.log(node)
 
     return <>
       <Grid>
         <Grid.Column width={4}>
-          Bar Size
-          <Slider barSize style={{ trackFill: { backgroundColor: "#3498db"}}} settings={{
-            start: 0.5,
-            min: 0.1,
-            max: 1,
-            step: 0.1,
-            onChange: value => {
-              setBarSize(value);
-            }
-          }} />
-          Beat Size
-          <Slider beatSize style={{ trackFill: { backgroundColor: "#3498db"}}} settings={{
-            start: 0.25,
-            min: 0.05,
-            max: 0.5,
-            step: 0.05,
-            onChange: value => {
-              setBeatSize(value);
-            }
-          }} />
-          Tatum Size
-          <Slider tatumSize style={{ trackFill: { backgroundColor: "#3498db"}}} settings={{
-            start: 0.25,
-            min: 0.05,
-            max: 0.5,
-            step: 0.05,
-            onChange: value => {
-              setTatumSize(value);
-            }
-          }} />
-          Beat Space
-          <Slider beatSpace style={{ trackFill: { backgroundColor: "#3498db"}}} settings={{
-            start: 4,
-            min: 2,
-            max: 8,
-            step: 2,
-            onChange: value => {
-              setBeatSpace(value);
-            }
-          }} />
-          Tatum Space
-          <Slider tatumSpace style={{ trackFill: { backgroundColor: "#3498db"}}} settings={{
-            start: 8,
-            min: 4,
-            max: 16,
-            step: 4,
-            onChange: value => {
-              setTatumSpace(value);
-            }
-          }} />
-          <List divided>
-            <Label.Group color='orange'>
-              <Label>
-                Bars
-                <Label.Detail>{bars.length}</Label.Detail>
-              </Label>
-              <Label>
-                Beats
-                <Label.Detail>{beats.length}</Label.Detail>
-              </Label>
-              <Label>
-                Tatums
-                <Label.Detail>{tatums.length}</Label.Detail>
-              </Label>
-            </Label.Group>
-          </List>
+          <div className='bar-slider'>
+            Bar Size
+            <Slider barSize style={{ trackFill: { backgroundColor: "#3498db"}}}
+              settings={{
+                start: 0.5,
+                min: 0.1,
+                max: 1,
+                step: 0.1,
+                onChange: value => {
+                  setBarSize(value);
+                }
+              }}
+            />
+            Beat Size
+            <Slider beatSize style={{ trackFill: { backgroundColor: "#3498db"}}}
+              settings={{
+                start: 0.25,
+                min: 0.05,
+                max: 0.5,
+                step: 0.05,
+                onChange: value => {
+                  setBeatSize(value);
+                }
+              }}
+            />
+            Tatum Size
+            <Slider tatumSize style={{ trackFill: { backgroundColor: "#3498db"}}}
+              settings={{
+                start: 0.25,
+                min: 0.05,
+                max: 0.5,
+                step: 0.05,
+                onChange: value => {
+                  setTatumSize(value);
+                }
+              }}
+            />
+            Beat Space
+            <Slider beatSpace style={{ trackFill: { backgroundColor: "#3498db"}}}
+              settings={{
+                start: 4,
+                min: 2,
+                max: 8,
+                step: 2,
+                onChange: value => {
+                  setBeatSpace(value);
+                }
+              }}
+            />
+            Tatum Space
+            <Slider tatumSpace style={{ trackFill: { backgroundColor: "#3498db"}}}
+              settings={{
+                start: 8,
+                min: 4,
+                max: 16,
+                step: 4,
+                onChange: value => {
+                  setTatumSpace(value);
+                }
+              }}
+            />
+            <List divided>
+              <Label.Group>
+                <Label className='bars-label'>
+                  Bars
+                  <Label.Detail>{bars.length}</Label.Detail>
+                </Label>
+                <Label className='beats-label'>
+                  Beats
+                  <Label.Detail>{beats.length}</Label.Detail>
+                </Label>
+                <Label className='tatums-label'>
+                  Tatums
+                  <Label.Detail>{tatums.length}</Label.Detail>
+                </Label>
+              </Label.Group>
+            </List>
+          </div>
         </Grid.Column>
         <Grid.Column width={5}>
           <Sunburst
@@ -237,48 +249,47 @@ const TopTracks = () => {
     <>
       <Grid>
         <Grid.Row>
-          
           <UserTop type="tracks">
             {(tracks, loading, error) => 
               tracks && tracks.data ? (
                 <>
                 <Grid.Column width={3}>
-                <h1 className="top-tracks">Your Top Tracks</h1>
-                <div style={{
-                  position: 'relative',
-                  height: '30vh',
-                  width: '200%',
-                  display: 'flex',
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}>
-                  <ReactCardCarousel
-                    spread="wide"
-                    ref={ Carousel => handleCarouselRef(Carousel, tracks) }
-                    afterChange={ () => handleCarouselChange(tracks) }
-                    disable_keydown={true}
-                  >
-                    {tracks.data.items.map(track => (
-                      <div style={{
-                        height: "200px",
-                        width: "200px",
-                        paddingTop: "5px",
-                        textAlign: "center",
-                        background: "#52C0F5",
-                        color: "#fff",
-                        fontFamily: "sans-serif",
-                        fontSize: "15px",
-                        borderRadius: "10px",
-                        boxSizing: "border-box"
-                      }}>
-                        <div>{track.name}</div>
-                        <div>{track.artists.map(artist => artist.name).join(', ')}</div>
-                        <Image src={track.album.images[0].url} />
-                      </div>
-                    ))}
-                  </ReactCardCarousel>
-                </div>
+                  <h1 className="top-tracks">Your Top Tracks</h1>
+                  <div style={{
+                    position: 'relative',
+                    height: '30vh',
+                    width: '200%',
+                    display: 'flex',
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}>
+                    <ReactCardCarousel
+                      spread="wide"
+                      ref={ Carousel => handleCarouselRef(Carousel, tracks) }
+                      afterChange={ () => handleCarouselChange(tracks) }
+                      disable_keydown={true}
+                    >
+                      {tracks.data.items.map(track => (
+                        <div style={{
+                          height: "200px",
+                          width: "200px",
+                          paddingTop: "5px",
+                          textAlign: "center",
+                          background: "#52C0F5",
+                          color: "#fff",
+                          fontFamily: "sans-serif",
+                          fontSize: "15px",
+                          borderRadius: "10px",
+                          boxSizing: "border-box"
+                        }}>
+                          <div>{track.name}</div>
+                          <div>{track.artists.map(artist => artist.name).join(', ')}</div>
+                          <Image src={track.album.images[0].url} />
+                        </div>
+                      ))}
+                    </ReactCardCarousel>
+                  </div>
                 </Grid.Column>
                 <Grid.Column width={2}></Grid.Column>
                 <Grid.Column width={7}>
@@ -297,26 +308,28 @@ const TopTracks = () => {
                 <Grid.Column width={4}>
                   {currentTrack &&
                     <>
-                      <h2>
-                        {currentTrack.name} {' '}
-                        <Label color={currentTrack.explicit ? 'red' : 'green'}>
-                          {currentTrack.explicit ? 'Explicit' : 'Clean'}
-                        </Label>
-                      </h2>
-                      <h3>{currentTrack.artists.map(artist => artist.name).join(', ')}</h3>
-                      <TrackAnalysis id={currentTrack.id}>
-                        {(analysis, loading, error) => (
-                          analysis && analysis.data ? (
-                            <>
-                              <h5>Duration: {toMMSS(analysis.data.track.duration)}</h5>
-                              <h5>Tempo: {analysis.data.track.tempo} (BPM)</h5>
-                              <h5>Pitch Class: {pitchClass[analysis.data.track.key]}</h5>
-                              <h5>Modality: {mode[analysis.data.track.mode]}</h5>
-                              <h5>Time Signature: {analysis.data.track.time_signature}/4</h5>
-                            </>
-                          ) : null
-                        )}
-                      </TrackAnalysis>
+                      <div className='current-track-info'>
+                        <h2>
+                          {currentTrack.name} {' '}
+                          <Label color={currentTrack.explicit ? 'red' : 'green'}>
+                            {currentTrack.explicit ? 'Explicit' : 'Clean'}
+                          </Label>
+                        </h2>
+                        <h3>{currentTrack.artists.map(artist => artist.name).join(', ')}</h3>
+                        <TrackAnalysis id={currentTrack.id}>
+                          {(analysis, loading, error) => (
+                            analysis && analysis.data ? (
+                              <>
+                                <h5>Duration: {toMMSS(analysis.data.track.duration)}</h5>
+                                <h5>Tempo: {analysis.data.track.tempo} (BPM)</h5>
+                                <h5>Pitch Class: {pitchClass[analysis.data.track.key]}</h5>
+                                <h5>Modality: {mode[analysis.data.track.mode]}</h5>
+                                <h5>Time Signature: {analysis.data.track.time_signature}/4</h5>
+                              </>
+                            ) : null
+                          )}
+                        </TrackAnalysis>
+                      </div>
                     </>
                   }
                 </Grid.Column>

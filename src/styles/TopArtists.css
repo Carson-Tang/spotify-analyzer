@@ -1,3 +1,31 @@
 .top-artists {
-  padding-left: 20px;
+  padding-left: 50px;
+}
+
+.artist-bars-label {
+  background-color: #fccf3e !important;
+  color: white !important;
+}
+
+.artist-beats-label {
+  background-color: #fd9a24 !important;
+  color: white !important;
+}
+
+.artist-tatums-label {
+  background-color: #f55f20 !important;
+  color: white !important;
+}
+
+.artist-bar-slider {
+  margin-left: -40px;
+  padding-top: 40px;
+}
+
+.current-track {
+  padding-right: 20px;
+}
+
+.pick-song {
+  padding-top: 100px;
 }

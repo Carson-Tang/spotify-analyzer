@@ -36,7 +36,6 @@ const TopGenres = () => {
     genres.forEach(genre => {
       res.push(genre[0])
     })
-    console.log(genres)
     return res.slice(0, Math.min(res.length, 10))
   }
 
@@ -51,7 +50,7 @@ const TopGenres = () => {
                 <h1 className='top-genres'>Favourite Genres</h1>
               </Grid.Row>
               <Grid.Row>
-                <div className='top-genres'>                  
+                <div className='genres'>                  
                   { getFavouriteGenres(artists.data.items).map(genre => {
                     return <>
                       <Label color={colors[Math.floor((genre.charCodeAt(0) - 97) / 2)]}>
